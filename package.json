@@ -1,0 +1,19 @@
+{
+  "name": "opencvnodebot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "cylon": "^1.2.0",
+    "cylon-opencv": "^0.15.0"
+  },
+  "devDependencies": {
+    "candyman": "^0.1.86",
+    "gulp": "^3.9.1"
+  }
+}
