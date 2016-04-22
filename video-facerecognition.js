@@ -1,24 +1,35 @@
 var cv = require('opencv');
 
 
+console.log("Started Training");
 var trainingData = [];
 /*for (var i = 0; i< 243; i++){
     trainingData.push([0,"ron/" + i + ".jpg" ]);
 }*/
 
-for (var i = 0; i< 4; i++){
-  for (var j = 0; j<81; j++){
+for (var i = 0; i< 1; i++){
+  for (var j = 0; j<243; j++){
     trainingData.push([i,"ModelsFaceDetections/" + i + "/" + j + ".jpg"]);
      //trainingData.push([i,"/Users/peterbraden/Downloads/orl_faces/s" + i + "/" + j + ".pgm" ])
   }
 }
 
-
 var facerec = cv.FaceRecognizer.createEigenFaceRecognizer();
 facerec.trainSync(trainingData);
+console.log("Done Training")
+
+console.log("Recognizing...")
 
 video_stream = new cv.VideoCapture(0);
-video_stream.read(function(err, im0){
+//# we create a window to display the Video frames
+namedWindow = new cv.NamedWindow('Video',1)
+
+//# We set an interval to retrieve frames from the
+//# video source and we get the intervalId so we can
+//# stop the program from the video feed window.
+
+intervalId = setInterval(()->
+    video_stream.read(function(err, im0){
     var x = 0;
     var iter = function(){
         video_stream.read(function(err, im){
@@ -40,22 +51,15 @@ video_stream.read(function(err, im0){
                 //im.ellipse(face.x + face.width / 2, face.y + face.height / 2, face.width / 2, face.height / 2);
                 }
             })
+        //   Finally we get the key pressed on the window to terminate
+        // execution of the program.
+        namedWindow.blockingWaitKey(0, 20)
+
     
-        x++;
-        if (x>100) {
-            console.log('done');
-            video_stream.readable = false;
-        }
-        else {   
-         iter();
-        }
-    })
+    
+            })
   }
   iter();
-});
+}),50);
 
 
-/*cv.readImage("./examples/files/mona.png", function(e, mat){
-  var th = mat.threshold(200, 200, "Threshold to Zero Inverted");
-  th.save('./examples/tmp/out.png');
-});*/
