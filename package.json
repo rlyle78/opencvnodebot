@@ -10,7 +10,8 @@
   "description": "",
   "dependencies": {
     "cylon": "^1.2.0",
-    "cylon-opencv": "^0.15.0"
+    "cylon-opencv": "^0.15.0",
+    "opencv": "^5.0.0"
   },
   "devDependencies": {
     "candyman": "^0.1.86",
