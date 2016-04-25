@@ -18,7 +18,6 @@ facerec.trainSync(trainingData);
 console.log("Done Training")
 
 console.log("Recognizing...")
-face_cascade = new cv.CascadeClassifier('haarcascade_frontalface_alt.xml')
 
 console.log("video")
 video_stream = new cv.VideoCapture(0);
@@ -29,16 +28,16 @@ video_stream.read(function(err, im0){
     var iter = function(){
         video_stream.read(function(err, im){
         if (err) throw err;
-       
+
         if (im.width() < 1 || im.height() < 1) throw new Error('Image has no size');
         window.show(im);
-   
+
         im.detectObject("haarcascade_frontalface_alt.xml", {}, function(err, faces){
         if (err) throw err;
-        
+
         img_gray = im.copy();
         img_gray.convertGrayscale();
-        
+
         for (var i = 0; i < faces.length; i++){
         var face = faces[i];
         img_crop = img_gray.crop(face.x,face.y,face.width,face.height)
@@ -48,19 +47,17 @@ video_stream.read(function(err, im0){
         //im.ellipse(face.x + face.width / 2, face.y + face.height / 2, face.width / 2, face.height / 2);
         }
     })
-        window.blockingWaitKey(0, 50);         
-    
+        window.blockingWaitKey(0, 50);
+
         x++;
         if (x>100) {
             console.log('done');
             video_stream.readable = false;
         }
-        else {   
+        else {
          iter();
         }
     })
   }
   iter();
 });
-
-
