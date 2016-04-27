@@ -5,10 +5,10 @@ var trainingData = [];
     trainingData.push([0,"ron/" + i + ".jpg" ]);
 }*/
 
-for (var i = 0; i< 4; i++){
-  for (var j = 0; j<75; j++){
+for (var i = 0; i< 1; i++){
+  for (var j = 0; j<243; j++){
     trainingData.push([i,"ModelsFaceDetections/" + i + "/" + j + ".jpg"]);
-    
+
      //trainingData.push([i,"/Users/peterbraden/Downloads/orl_faces/s" + i + "/" + j + ".pgm" ])
   }
 }
@@ -16,16 +16,16 @@ for (var i = 0; i< 4; i++){
 cv.readImage("RonModels1.jpg", function(err, im){
  var facerec = cv.FaceRecognizer.createEigenFaceRecognizer();
   facerec.trainSync(trainingData);
-  
+
 if (err) throw err;
   if (im.width() < 1 || im.height() < 1) throw new Error('Image has no size');
-  
+
   im.detectObject("haarcascade_frontalface_alt.xml", {}, function(err, faces){
     if (err) throw err;
-    
+
     img_gray = im.copy();
     img_gray.convertGrayscale();
-    
+
     for (var i = 0; i < faces.length; i++){
       var face = faces[i];
       img_crop = img_gray.crop(face.x,face.y,face.width,face.height)

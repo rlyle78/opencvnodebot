@@ -30,33 +30,37 @@ video_stream.read(function(err, im0){
         if (err) throw err;
 
         if (im.width() < 1 || im.height() < 1) throw new Error('Image has no size');
-        window.show(im);
+
 
         im.detectObject("haarcascade_frontalface_alt.xml", {}, function(err, faces){
-        if (err) throw err;
+          if (err) throw err;
 
-        img_gray = im.copy();
-        img_gray.convertGrayscale();
+          img_gray = im.copy();
+          img_gray.convertGrayscale();
 
-        for (var i = 0; i < faces.length; i++){
-        var face = faces[i];
-        img_crop = img_gray.crop(face.x,face.y,face.width,face.height)
-        img_crop.resize(60,60, 1);
-        img_crop.save('face' + i + '.jpg');
-        console.log(facerec.predictSync(img_crop));
-        //im.ellipse(face.x + face.width / 2, face.y + face.height / 2, face.width / 2, face.height / 2);
-        }
-    })
-        window.blockingWaitKey(0, 50);
+          for (var i = 0; i < faces.length; i++)
+          {
+            var face = faces[i];
+            img_crop = img_gray.crop(face.x,face.y,face.width,face.height)
+            img_crop.resize(60,60, 1);
+            //img_crop.save('face' + i + '.jpg');
+            console.log(facerec.predictSync(img_crop));
+            im.ellipse(face.x + face.width / 2, face.y + face.height / 2, face.width / 2, face.height / 2);
+          }
+
+          window.show(im);
+          window.blockingWaitKey(0, 500);
+        })
 
         x++;
-        if (x>100) {
+        iter();
+        /*if (x>100) {
             console.log('done');
             video_stream.readable = false;
         }
         else {
          iter();
-        }
+       }*/
     })
   }
   iter();
