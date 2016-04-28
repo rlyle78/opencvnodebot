@@ -1,6 +1,20 @@
 "use strict";
 
 var Cylon = require("cylon");
+var cv = require('opencv');
+console.log("Started Training");
+var trainingData = [];
+/*for (var i = 0; i< 243; i++){
+    trainingData.push([0,"ron/" + i + ".jpg" ]);
+}*/
+
+for (var i = 0; i< 1; i++){
+  for (var j = 0; j<243; j++){
+    trainingData.push([i,"ModelsFaceDetections/" + i + "/" + j + ".jpg"]);
+     //trainingData.push([i,"/Users/peterbraden/Downloads/orl_faces/s" + i + "/" + j + ".pgm" ])
+  }
+}
+
 
 Cylon.robot({
   connections: {
@@ -12,12 +26,16 @@ Cylon.robot({
     camera: {
       driver: "camera",
       camera: 0,
-      haarcascade: "hogcascade_cars_sideview.xml"
-      //haarcascade: "carcascade.xml"
+      haarcascade: "haarcascade_frontalface_alt.xml"
     }
   },
 
   work: function(my) {
+
+    var facerec = cv.FaceRecognizer.createEigenFaceRecognizer();
+    facerec.trainSync(trainingData);
+    console.log("Done Training")
+
     // We setup our face detection when the camera is ready to
     // display images, we use `once` instead of `on` to make sure
     // other event listeners are only registered once.
@@ -35,11 +53,19 @@ Cylon.robot({
         // We loop through the faces and manipulate the image
         // to display a square in the coordinates for the detected
         // faces.
+        var img_gray = im.copy();
+        img_gray.convertGrayscale();
         for (var i = 0; i < faces.length; i++) {
           var face = faces[i];
+
+          var img_crop = img_gray.crop(face.x,face.y,face.width,face.height)
+          img_crop.resize(60,60, 1);
+          //img_crop.save('face' + i + '.jpg');
+          console.log(facerec.predictSync(img_crop));
+          
           im.rectangle(
             [face.x, face.y],
-            [face.x + face.width, face.y + face.height],
+            [face.width, face.height],
             [0, 255, 0],
             2
           );

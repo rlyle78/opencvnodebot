@@ -62,6 +62,7 @@ Cylon.robot({
       // that we just got from the camera feed.
       my.camera.on("frameReady", function(err, im) {
         if (err) { console.log(err); }
+        im.resize(320,240);
         my.camera.detectFaces(im);
       });
 

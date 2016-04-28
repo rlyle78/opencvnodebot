@@ -8,8 +8,6 @@ var trainingData = [];
 for (var i = 0; i< 1; i++){
   for (var j = 0; j<243; j++){
     trainingData.push([i,"ModelsFaceDetections/" + i + "/" + j + ".jpg"]);
-
-     //trainingData.push([i,"/Users/peterbraden/Downloads/orl_faces/s" + i + "/" + j + ".pgm" ])
   }
 }
 

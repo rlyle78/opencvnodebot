@@ -30,7 +30,7 @@ video_stream.read(function(err, im0){
         if (err) throw err;
 
         if (im.width() < 1 || im.height() < 1) throw new Error('Image has no size');
-
+        im.resize(320,240);
 
         im.detectObject("haarcascade_frontalface_alt.xml", {}, function(err, faces){
           if (err) throw err;
@@ -48,9 +48,10 @@ video_stream.read(function(err, im0){
             im.ellipse(face.x + face.width / 2, face.y + face.height / 2, face.width / 2, face.height / 2);
           }
 
-          window.show(im);
-          window.blockingWaitKey(0, 500);
+
         })
+        window.show(im);
+        window.blockingWaitKey(0, 500);
 
         x++;
         iter();
