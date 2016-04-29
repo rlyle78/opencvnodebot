@@ -39,7 +39,7 @@ Cylon.robot({
           var face = faces[i];
           im.rectangle(
             [face.x, face.y],
-            [face.x + face.width, face.y + face.height],
+            [face.width, face.height],
             [0, 255, 0],
             2
           );
