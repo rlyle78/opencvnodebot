@@ -31,7 +31,7 @@ Cylon.robot({
       // in the frame (im).
       my.camera.on("facesDetected", function(err, im, faces) {
         if (err) { console.log(err); }
-
+	
         // We loop through the faces and manipulate the image
         // to display a square in the coordinates for the detected
         // faces.

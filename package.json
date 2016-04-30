@@ -11,6 +11,7 @@
   "dependencies": {
     "cylon": "^1.2.0",
     "cylon-opencv": "^0.15.0",
+    "maker-ifttt": "^1.0.0",
     "opencv": "^5.0.0"
   },
   "devDependencies": {
